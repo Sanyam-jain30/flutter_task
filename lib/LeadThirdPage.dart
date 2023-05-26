@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_task/LeadFirstPage.dart';
 import 'package:flutter_task/main.dart';
 
-class LeadThirdPage extends StatelessWidget{
-  LeadThirdPage({super.key});
+class LeadThirdPage extends StatefulWidget{
+  const LeadThirdPage({super.key, required this.name, required this.pincode, required this.income});
+
+  final String name;
+  final String pincode;
+  final String income;
+
+  @override
+  LeadOne createState() => LeadOne();
+}
+
+class LeadOne extends State<LeadThirdPage>{
   List<String> serviceItems = ['Service Type', 'Car Loan', 'Education Loan', 'Property Loan', 'Business Loan', 'Personal Loan'];
   List<String> sourceItems = ['Source', 'Personal', 'Reference', 'Google', 'LinkedIn', 'Instagram', 'Facebook', 'Dialer'];
   List<String> leadStatusItems = ['', 'Cancelled', 'Pre-login', 'Follow Up', 'Documents Pending', 'All Docs Required', 'Logged-in', 'Banker Verification', 'Approval'];
 
-  String? selectedServiceValue = "Service Type";
+  String selectedServiceValue = "Service Type";
   String? selectedSource = "Source";
   String? selectedLeadStatus = "";
+  final dealAmountController = TextEditingController();
 
   @override
   Widget build(BuildContext context){
@@ -81,6 +91,7 @@ class LeadThirdPage extends StatelessWidget{
                           color: Colors.white,
                         ),
                         child: TextFormField(
+                          controller: dealAmountController,
                           maxLines: 1,
                           style: const TextStyle(fontSize: 20),
                           decoration: InputDecoration(
@@ -93,7 +104,7 @@ class LeadThirdPage extends StatelessWidget{
                         ),
                       ),
                       Container(
-                          margin: const EdgeInsets.only(top: 10),
+                        margin: const EdgeInsets.only(top: 10),
                         height: 40,
                         decoration: const BoxDecoration(
                           boxShadow: [
@@ -105,19 +116,23 @@ class LeadThirdPage extends StatelessWidget{
                           ],
                           color: Colors.white,
                         ),
-                        child: DropdownButtonFormField(
+                        child: DropdownButton(
+                          style: const TextStyle(fontSize: 16, color: Colors.black),
+                          isExpanded: true,
+                          hint: const Text("Service Type"),
                           value: selectedServiceValue,
-                          items: serviceItems.map(
-                              (e) => DropdownMenuItem(value: e, child: Text(e))
-                          ).toList(),
-                          onChanged: (val) {},
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.fromLTRB(10.0, 10.0, 15.0, 5.0),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
-                          ),
-                        )
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectedServiceValue = newValue ?? "";
+                            });
+                          },
+                          items: serviceItems.map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
                       ),
                       Container(
                           margin: const EdgeInsets.only(top: 10),
@@ -132,19 +147,23 @@ class LeadThirdPage extends StatelessWidget{
                             ],
                             color: Colors.white,
                           ),
-                          child: DropdownButtonFormField(
+                          child: DropdownButton(
+                            style: const TextStyle(fontSize: 16, color: Colors.black),
+                            isExpanded: true,
+                            hint: const Text("Source"),
                             value: selectedSource,
-                            items: sourceItems.map(
-                                    (e) => DropdownMenuItem(value: e, child: Text(e))
-                            ).toList(),
-                            onChanged: (val) {},
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.fromLTRB(10.0, 10.0, 15.0, 5.0),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                              ),
-                            ),
-                          )
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedSource = newValue ?? "";
+                              });
+                            },
+                            items: sourceItems.map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
                       ),
                       Row(
                         mainAxisSize: MainAxisSize.max,
@@ -176,12 +195,12 @@ class LeadThirdPage extends StatelessWidget{
                                   maxLines: 1,
                                   style: const TextStyle(fontSize: 20),
                                   decoration: InputDecoration(
-                                    contentPadding: const EdgeInsets.fromLTRB(10.0, 10.0, 15.0, 5.0),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5.0),
-                                    ),
-                                    prefixIcon: const Icon(Icons.calendar_today_outlined),
-                                    hintText: '|'
+                                      contentPadding: const EdgeInsets.fromLTRB(10.0, 10.0, 15.0, 5.0),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(5.0),
+                                      ),
+                                      prefixIcon: const Icon(Icons.calendar_today_outlined),
+                                      hintText: '|'
                                   ),
                                 ),
                               )
@@ -242,18 +261,21 @@ class LeadThirdPage extends StatelessWidget{
                           ],
                           color: Colors.white,
                         ),
-                        child: DropdownButtonFormField(
+                        child: DropdownButton(
+                          style: const TextStyle(fontSize: 16, color: Colors.black),
+                          isExpanded: true,
                           value: selectedLeadStatus,
-                          items: leadStatusItems.map(
-                                  (e) => DropdownMenuItem(value: e, child: Text(e))
-                          ).toList(),
-                          onChanged: (val) {},
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.fromLTRB(10.0, 10.0, 15.0, 5.0),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
-                          ),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectedLeadStatus = newValue ?? "";
+                            });
+                          },
+                          items: leadStatusItems.map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
                         ),
                       ),
                       Container(
@@ -305,10 +327,7 @@ class LeadThirdPage extends StatelessWidget{
                             ),
                             child: ElevatedButton(
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => const LeadFirstPage()),
-                                  );
+                                  Navigator.pop(context);
                                 },
                                 style: ElevatedButton.styleFrom(
                                   elevation: 0,
@@ -366,7 +385,7 @@ class LeadThirdPage extends StatelessWidget{
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => const MyApp()),
+                                MaterialPageRoute(builder: (context) => MyAppNew(name: widget.name, pincode: widget.pincode, income: widget.income, dealAmount: dealAmountController.text.toString(), leadStatus: selectedLeadStatus.toString(), loanType: selectedServiceValue.toString())),
                               );
                             },
                             style: ElevatedButton.styleFrom(

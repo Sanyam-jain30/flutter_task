@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_task/LeadFirstPage.dart';
 
@@ -6,12 +6,86 @@ void main() {
   runApp(const MyApp());
 }
 
+List<Map<String, dynamic>> leadsData = [
+  {
+    "Name": "Prasad Kumar",
+    "Id": "M3Am30025567",
+    "Deal_amount": "10,29,00,000",
+    "Income": "45,000",
+    "Pincode": 506003,
+    "Lead_status": "Docs Pending",
+    "Loan_type": "Personal Loan"
+  },
+  {
+    "Name": "Prasad Kumar",
+    "Id": "M3Am30025567",
+    "Deal_amount": "10,29,00,000",
+    "Income": "45,000",
+    "Pincode": 506003,
+    "Lead_status": "Docs Pending",
+    "Loan_type": "Personal Loan"
+  },
+  {
+    "Name": "Prasad Kumar",
+    "Id": "M3Am30025567",
+    "Deal_amount": "10,29,00,000",
+    "Income": "45,000",
+    "Pincode": 506003,
+    "Lead_status": "Docs Pending",
+    "Loan_type": "Personal Loan"
+  },
+  {
+    "Name": "Prasad Kumar",
+    "Id": "M3Am30025567",
+    "Deal_amount": "10,29,00,000",
+    "Income": "45,000",
+    "Pincode": 506003,
+    "Lead_status": "Docs Pending",
+    "Loan_type": "Personal Loan"
+  },
+];
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: const MyHomePage(title: 'Leads'),
+    );
+  }
+}
+
+class MyAppNew extends StatelessWidget {
+  const MyAppNew({super.key, required this.name, required this.pincode, required this.income, required this.dealAmount, required this.leadStatus, required this.loanType});
+
+  final String name;
+  final String pincode;
+  final String income;
+  final String dealAmount;
+  final String leadStatus;
+  final String loanType;
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    var r = Random();
+    String id = "M3Am${r.nextInt(90000000) + 10000000}";
+    leadsData.add({
+      "Name": name,
+      "Id": id,
+      "Deal_amount": dealAmount,
+      "Income": income,
+      "Pincode": pincode,
+      "Lead_status": leadStatus,
+      "Loan_type": loanType
+    });
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -33,44 +107,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  static const List<Map<String, dynamic>> leadsData = [
-    {
-      "Name": "Prasad Kumar",
-      "Id": "M3Am30025567",
-      "Deal_amount": "10,29,00,000",
-      "Income": "45,000",
-      "Pincode": 506003,
-      "Lead_status": "Docs Pending",
-      "Loan_type": "Personal Loan"
-    },
-    {
-      "Name": "Prasad Kumar",
-      "Id": "M3Am30025567",
-      "Deal_amount": "10,29,00,000",
-      "Income": "45,000",
-      "Pincode": 506003,
-      "Lead_status": "Docs Pending",
-      "Loan_type": "Personal Loan"
-    },
-    {
-      "Name": "Prasad Kumar",
-      "Id": "M3Am30025567",
-      "Deal_amount": "10,29,00,000",
-      "Income": "45,000",
-      "Pincode": 506003,
-      "Lead_status": "Docs Pending",
-      "Loan_type": "Personal Loan"
-    },
-    {
-      "Name": "Prasad Kumar",
-      "Id": "M3Am30025567",
-      "Deal_amount": "10,29,00,000",
-      "Income": "45,000",
-      "Pincode": 506003,
-      "Lead_status": "Docs Pending",
-      "Loan_type": "Personal Loan"
-    },
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -308,7 +344,24 @@ class _MyHomePageState extends State<MyHomePage> {
                   )]
                 ),
               ),
-              const Text('Team Leads')
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LeadFirstPage()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xffd9d9d9),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    elevation: 2
+                  ),
+                  child: const Text('Add Lead', style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.normal)),
+                ),
+              ),
           ],
         ),
       ),
@@ -363,7 +416,7 @@ class IconAddClass extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const LeadFirstPage()),
+                MaterialPageRoute(builder: (context) => LeadFirstPage()),
               );
             },
           ),

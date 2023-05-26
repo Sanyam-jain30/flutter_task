@@ -3,7 +3,10 @@ import 'package:flutter_task/LeadSecondPage.dart';
 import 'package:flutter_task/main.dart';
 
 class LeadFirstPage extends StatelessWidget{
-  const LeadFirstPage({super.key});
+  LeadFirstPage({super.key});
+
+  final leadNameController = TextEditingController();
+  final pincodeController = TextEditingController();
 
   @override
   Widget build(BuildContext context){
@@ -72,6 +75,7 @@ class LeadFirstPage extends StatelessWidget{
                         color: Colors.white,
                       ),
                       child: TextFormField(
+                        controller: leadNameController,
                         maxLines: 1,
                         style: const TextStyle(fontSize: 20),
                         decoration: InputDecoration(
@@ -213,6 +217,7 @@ class LeadFirstPage extends StatelessWidget{
                         color: Colors.white,
                       ),
                       child: TextFormField(
+                        controller: pincodeController,
                         maxLines: 1,
                         style: const TextStyle(fontSize: 20),
                         decoration: InputDecoration(
@@ -274,7 +279,7 @@ class LeadFirstPage extends StatelessWidget{
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => const LeadSecondPage()),
+                                  MaterialPageRoute(builder: (context) => LeadSecondPage(name: leadNameController.text.toString(), pincode: pincodeController.text.toString())),
                                 );
                               },
                               style: ElevatedButton.styleFrom(

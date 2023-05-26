@@ -4,7 +4,12 @@ import 'package:flutter_task/LeadThirdPage.dart';
 import 'package:flutter_task/main.dart';
 
 class LeadSecondPage extends StatelessWidget{
-  const LeadSecondPage({super.key});
+  LeadSecondPage({super.key, required this.name, required this.pincode});
+
+  final String name;
+  final String pincode;
+
+  final incomeController = TextEditingController();
 
   @override
   Widget build(BuildContext context){
@@ -131,6 +136,7 @@ class LeadSecondPage extends StatelessWidget{
                           color: Colors.white,
                         ),
                         child: TextFormField(
+                          controller: incomeController,
                           maxLines: 1,
                           style: const TextStyle(fontSize: 20),
                           decoration: InputDecoration(
@@ -269,7 +275,7 @@ class LeadSecondPage extends StatelessWidget{
                                 onPressed: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => const LeadFirstPage()),
+                                    MaterialPageRoute(builder: (context) => LeadFirstPage()),
                                   );
                                 },
                                 style: ElevatedButton.styleFrom(
@@ -328,7 +334,7 @@ class LeadSecondPage extends StatelessWidget{
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => LeadThirdPage()),
+                                MaterialPageRoute(builder: (context) => LeadThirdPage(name: name, pincode: pincode, income: incomeController.text.toString())),
                               );
                             },
                             style: ElevatedButton.styleFrom(

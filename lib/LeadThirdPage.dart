@@ -25,7 +25,7 @@ class LeadOne extends State<LeadThirdPage>{
   DateTime _selectedDate = DateTime.now();
   TimeOfDay _selectedTime = TimeOfDay.now();
   final TextEditingController _textEditingController = TextEditingController();
-  TextEditingController _timeEditingController = TextEditingController();
+  final TextEditingController _timeEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context){
@@ -205,7 +205,7 @@ class LeadOne extends State<LeadThirdPage>{
                                   maxLines: 1,
                                   style: const TextStyle(fontSize: 20),
                                   decoration: InputDecoration(
-                                      contentPadding: const EdgeInsets.fromLTRB(10.0, 10.0, 15.0, 5.0),
+                                      contentPadding: const EdgeInsets.fromLTRB(10.0, 10.0, 0, 0),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(5.0),
                                       ),
@@ -216,7 +216,7 @@ class LeadOne extends State<LeadThirdPage>{
                                   onTap: () async {
                                     DateTime? pickedDate = await showDatePicker(
                                         context: context,
-                                        initialDate: _selectedDate ?? DateTime.now(),
+                                        initialDate: _selectedDate,
                                         firstDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day), //DateTime.now() - not to allow to choose before today.
                                         lastDate: DateTime(2101)
                                     );
@@ -261,7 +261,7 @@ class LeadOne extends State<LeadThirdPage>{
                                   maxLines: 1,
                                   style: const TextStyle(fontSize: 20),
                                   decoration: InputDecoration(
-                                    contentPadding: const EdgeInsets.fromLTRB(10.0, 10.0, 15.0, 5.0),
+                                    contentPadding: const EdgeInsets.fromLTRB(10.0, 10.0, 0, 0),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(5.0),
                                     ),
@@ -272,16 +272,12 @@ class LeadOne extends State<LeadThirdPage>{
                                   onTap: () async {
                                     TimeOfDay? pickedTime = await showTimePicker(
                                         context: context,
-                                        initialTime: _selectedTime ?? TimeOfDay.now(),
+                                        initialTime: _selectedTime,
                                     );
 
-                                    if(pickedTime != null ){  //output 10:51 PM
-                                      DateTime parsedTime = DateFormat.jm().parse(pickedTime.format(context).toString());
-                                      String formattedTime = DateFormat('HH:mm').format(parsedTime);
-                                      setState(() {
-                                        _timeEditingController.text = formattedTime; //set the value of text field.
-                                      });
+                                    if(pickedTime != null ){
                                       _selectedTime = pickedTime;
+                                      _timeEditingController.text = "${pickedTime.hour}:${pickedTime.minute}";
                                     }
                                   },
                                 ),

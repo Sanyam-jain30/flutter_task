@@ -77,15 +77,17 @@ class MyAppNew extends StatelessWidget {
   Widget build(BuildContext context) {
     var r = Random();
     String id = "M3Am${r.nextInt(90000000) + 10000000}";
-    leadsData.add({
-      "Name": name,
-      "Id": id,
-      "Deal_amount": dealAmount,
-      "Income": income,
-      "Pincode": pincode,
-      "Lead_status": leadStatus,
-      "Loan_type": loanType
-    });
+    if(name != "" && dealAmount != "" && income != "" &&  pincode != "" && leadStatus != "" && loanType != "") {
+      leadsData.add({
+        "Name": name,
+        "Id": id,
+        "Deal_amount": dealAmount,
+        "Income": income,
+        "Pincode": pincode,
+        "Lead_status": leadStatus,
+        "Loan_type": loanType
+      });
+    }
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(

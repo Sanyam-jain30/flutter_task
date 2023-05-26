@@ -368,7 +368,6 @@ class LeadOne extends State<LeadThirdPage>{
                         ],
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 143),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           border: Border.all(color: const Color(0xffd4d4d4), width: 1, ),
@@ -389,6 +388,7 @@ class LeadOne extends State<LeadThirdPage>{
                               );
                             },
                             style: ElevatedButton.styleFrom(
+                              minimumSize: const Size.fromHeight(50),
                               elevation: 0,
                               backgroundColor: const Color(0xff232939),
                             ),

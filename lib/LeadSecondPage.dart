@@ -204,6 +204,7 @@ class LeadSecondPage extends StatelessWidget{
                                 ),
                                 child: TextFormField(
                                   maxLines: 1,
+                                  keyboardType: TextInputType.number,
                                   style: const TextStyle(fontSize: 20),
                                   decoration: InputDecoration(
                                     contentPadding: const EdgeInsets.fromLTRB(10.0, 10.0, 15.0, 5.0),

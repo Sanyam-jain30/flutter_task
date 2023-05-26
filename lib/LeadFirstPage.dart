@@ -106,6 +106,7 @@ class LeadFirstPage extends StatelessWidget{
                       child: TextFormField(
                         maxLines: 1,
                         style: const TextStyle(fontSize: 20),
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.fromLTRB(10.0, 10.0, 15.0, 5.0),
                           border: OutlineInputBorder(
@@ -133,6 +134,7 @@ class LeadFirstPage extends StatelessWidget{
                       ),
                       child: TextFormField(
                         maxLines: 1,
+                        keyboardType: TextInputType.number,
                         style: const TextStyle(fontSize: 20),
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.fromLTRB(10.0, 10.0, 15.0, 5.0),
@@ -219,6 +221,7 @@ class LeadFirstPage extends StatelessWidget{
                       child: TextFormField(
                         controller: pincodeController,
                         maxLines: 1,
+                        keyboardType: TextInputType.number,
                         style: const TextStyle(fontSize: 20),
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.fromLTRB(10.0, 10.0, 15.0, 5.0),

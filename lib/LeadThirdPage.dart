@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_task/main.dart';
+import 'package:intl/intl.dart';
 
 class LeadThirdPage extends StatefulWidget{
   const LeadThirdPage({super.key, required this.name, required this.pincode, required this.income});
@@ -21,6 +22,10 @@ class LeadOne extends State<LeadThirdPage>{
   String? selectedSource = "Source";
   String? selectedLeadStatus = "";
   final dealAmountController = TextEditingController();
+  DateTime _selectedDate = DateTime.now();
+  TimeOfDay _selectedTime = TimeOfDay.now();
+  final TextEditingController _textEditingController = TextEditingController();
+  TextEditingController _timeEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context){
@@ -116,22 +121,24 @@ class LeadOne extends State<LeadThirdPage>{
                           ],
                           color: Colors.white,
                         ),
-                        child: DropdownButton(
-                          style: const TextStyle(fontSize: 16, color: Colors.black),
-                          isExpanded: true,
-                          hint: const Text("Service Type"),
-                          value: selectedServiceValue,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              selectedServiceValue = newValue ?? "";
-                            });
-                          },
-                          items: serviceItems.map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton(
+                            style: const TextStyle(fontSize: 16, color: Colors.black),
+                            isExpanded: true,
+                            hint: const Text("Service Type"),
+                            value: selectedServiceValue,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedServiceValue = newValue ?? "";
+                              });
+                            },
+                            items: serviceItems.map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
                       Container(
@@ -147,22 +154,24 @@ class LeadOne extends State<LeadThirdPage>{
                             ],
                             color: Colors.white,
                           ),
-                          child: DropdownButton(
-                            style: const TextStyle(fontSize: 16, color: Colors.black),
-                            isExpanded: true,
-                            hint: const Text("Source"),
-                            value: selectedSource,
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                selectedSource = newValue ?? "";
-                              });
-                            },
-                            items: sourceItems.map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              style: const TextStyle(fontSize: 16, color: Colors.black),
+                              isExpanded: true,
+                              hint: const Text("Source"),
+                              value: selectedSource,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  selectedSource = newValue ?? "";
+                                });
+                              },
+                              items: sourceItems.map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
                           ),
                       ),
                       Row(
@@ -180,7 +189,7 @@ class LeadOne extends State<LeadThirdPage>{
                               ),
                               Container(
                                 height: 40,
-                                width: 150,
+                                width: 190,
                                 decoration: const BoxDecoration(
                                   boxShadow: [
                                     BoxShadow(
@@ -192,6 +201,7 @@ class LeadOne extends State<LeadThirdPage>{
                                   color: Colors.white,
                                 ),
                                 child: TextFormField(
+                                  controller: _textEditingController,
                                   maxLines: 1,
                                   style: const TextStyle(fontSize: 20),
                                   decoration: InputDecoration(
@@ -199,9 +209,27 @@ class LeadOne extends State<LeadThirdPage>{
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(5.0),
                                       ),
-                                      prefixIcon: const Icon(Icons.calendar_today_outlined),
-                                      hintText: '|'
+                                    prefixIcon: const Icon(Icons.calendar_today_outlined),
+                                    hintText: '|',
                                   ),
+                                  readOnly: true,
+                                  onTap: () async {
+                                    DateTime? pickedDate = await showDatePicker(
+                                        context: context,
+                                        initialDate: _selectedDate ?? DateTime.now(),
+                                        firstDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day), //DateTime.now() - not to allow to choose before today.
+                                        lastDate: DateTime(2101)
+                                    );
+
+                                    if(pickedDate != null){
+                                      _selectedDate = pickedDate;
+                                      _textEditingController
+                                        ..text = DateFormat.yMMMd().format(_selectedDate)
+                                        ..selection = TextSelection.fromPosition(TextPosition(
+                                            offset: _textEditingController.text.length,
+                                            affinity: TextAffinity.upstream));
+                                    }
+                                  },
                                 ),
                               )
                             ],
@@ -229,16 +257,33 @@ class LeadOne extends State<LeadThirdPage>{
                                   color: Colors.white,
                                 ),
                                 child: TextFormField(
+                                  controller: _timeEditingController,
                                   maxLines: 1,
                                   style: const TextStyle(fontSize: 20),
                                   decoration: InputDecoration(
-                                      contentPadding: const EdgeInsets.fromLTRB(10.0, 10.0, 15.0, 5.0),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(5.0),
-                                      ),
-                                      prefixIcon: const Icon(Icons.access_time),
-                                      hintText: '|'
+                                    contentPadding: const EdgeInsets.fromLTRB(10.0, 10.0, 15.0, 5.0),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    prefixIcon: const Icon(Icons.calendar_today_outlined),
+                                    hintText: '|',
                                   ),
+                                  readOnly: true,
+                                  onTap: () async {
+                                    TimeOfDay? pickedTime = await showTimePicker(
+                                        context: context,
+                                        initialTime: _selectedTime ?? TimeOfDay.now(),
+                                    );
+
+                                    if(pickedTime != null ){  //output 10:51 PM
+                                      DateTime parsedTime = DateFormat.jm().parse(pickedTime.format(context).toString());
+                                      String formattedTime = DateFormat('HH:mm').format(parsedTime);
+                                      setState(() {
+                                        _timeEditingController.text = formattedTime; //set the value of text field.
+                                      });
+                                      _selectedTime = pickedTime;
+                                    }
+                                  },
                                 ),
                               )
                             ],
@@ -261,21 +306,23 @@ class LeadOne extends State<LeadThirdPage>{
                           ],
                           color: Colors.white,
                         ),
-                        child: DropdownButton(
-                          style: const TextStyle(fontSize: 16, color: Colors.black),
-                          isExpanded: true,
-                          value: selectedLeadStatus,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              selectedLeadStatus = newValue ?? "";
-                            });
-                          },
-                          items: leadStatusItems.map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton(
+                            style: const TextStyle(fontSize: 16, color: Colors.black),
+                            isExpanded: true,
+                            value: selectedLeadStatus,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedLeadStatus = newValue ?? "";
+                              });
+                            },
+                            items: leadStatusItems.map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
                       Container(
